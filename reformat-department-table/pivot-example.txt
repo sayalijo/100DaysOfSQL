@@ -1,0 +1,70 @@
+Ex: 1 Determine the number of models of each type of product for each maker from table Product.
+
+One way is group by:
+        SELECT maker,
+        SUM(CASE type WHEN 'pc' THEN 1 ELSE 0 END) PC
+        , SUM(CASE type WHEN 'laptop' THEN 1 ELSE 0 END) Laptop
+        , SUM(CASE type WHEN 'printer' THEN 1 ELSE 0 END) Printer
+        FROM Product
+        GROUP BY maker
+
+Another way is pivot:
+        SELECT maker, -- column (columns) values which form the row headers
+        [pc], [laptop], [printer] -- values from the column, which is specified in
+        -- the ‘type’ clause, forming the column headers
+        FROM Product -- may be a subquery here
+        PIVOT -- pivot-table forming
+        (COUNT(model) -- aggregate function which forms the contents of the pivot table
+        FOR type -- it will be the column, unique values which will be the column headers
+        IN([pc], [laptop], [printer]) -- concrete values in a ‘type’ column are specified,
+        -- which should be used as headers
+        -- because we cannot take all
+        ) pvt; -- alias of pivot table
+
+
+Ex 2 Calculate the average price on laptops depending on screen size.
+
+SELECT screen, AVG(price) avg_ FROM Laptop GROUP BY screen
+--------------
+screen	avg_
+11	700.00
+12	960.00
+14	1175.00
+15	1050.00
+--------------
+
+If we want to flatten rows into column:
+SELECT [avg_],
+ [11],[12],[14],[15]
+ FROM (SELECT 'average price' AS 'avg_', screen, price FROM Laptop) x
+ PIVOT
+ (AVG(price)
+ FOR screen
+ IN([11],[12],[14],[15])
+ ) pvt
+
+
+ For pivot, explicit list of columns is required to output.
+
+ -------------------------------------------------------------------
+
+ Syntax for pivot:
+
+ SELECT <non-pivoted column>,
+    [first pivoted column] AS <column name>,
+    [second pivoted column] AS <column name>,
+    ...
+    [last pivoted column] AS <column name>
+FROM
+    (<SELECT query that produces the data>)
+    AS <alias for the source query>
+PIVOT
+(
+    <aggregation function>(<column being aggregated>)
+FOR
+[<column that contains the values that will become column headers>]
+    IN ( [first pivoted column], [second pivoted column],
+    ... [last pivoted column])
+) AS <alias for the pivot table>
+<optional ORDER BY clause>;
+

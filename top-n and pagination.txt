@@ -1,0 +1,13 @@
+select *
+  from
+(your_query)
+ where rownum <= 10;
+in order to get the first 10 rows from "your query," and how to use ROWNUM like this:
+
+select *
+  from
+( select rownum rnum, a.*
+    from (your_query) a
+   where rownum <= :M )
+where rnum >= :N;
+in order to get rows n through m from "your query."
