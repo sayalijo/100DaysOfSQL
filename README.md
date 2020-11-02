@@ -4,4 +4,4 @@ Day 1: combine-two-tables, big-countries, classes-more-than-5-students, customer
 
 Day 2: emp-earning-more-than-managers, swap-salary, rising-temperature, reformat-department-table
 
-Day 3: 
+Day 3: department-highest-salary, consecutive-numbers
