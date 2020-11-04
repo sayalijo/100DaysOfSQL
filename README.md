@@ -7,3 +7,5 @@ Day 2: emp-earning-more-than-managers, swap-salary, rising-temperature, reformat
 Day 3: department-highest-salary, consecutive-numbers
 
 Day 4: rank-scores, department-top-three-salaries, human-traffic-stadium
+
+Day 5: avg-population-of-city, query-diff-btn-max-&-min-population, salary-blunder-zeros-removed-when-avg, sort-result-by-last-3-chars-of-name, types-of-triangles, weather-truncate-decimal
