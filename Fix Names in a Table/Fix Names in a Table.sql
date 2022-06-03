@@ -1,0 +1,1 @@
+select user_id, INITCAP(name) name from users order by user_id;

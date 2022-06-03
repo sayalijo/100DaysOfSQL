@@ -1,1 +1,2 @@
-select d.name Department, e.name Employee, e.salary Salary from (select name, salary, dense_rank() over(partition by departmentid order by salary desc) dr, departmentid from employee) e join department d on e.departmentid = d.id where dr < 4;
+select d.name Department, e.name Employee, e.salary Salary from (select name, salary, dense_rank() over(partition by departmentid order by salary desc) dr, departmentid from employee) e join department d on e.departmentid = d.id
+where dr < 4;
